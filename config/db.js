@@ -1,9 +1,15 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-function connectToDb(){
-    mongoose.connect(process.env.MONGO_URL.replace('<PASSWORD>',process.env.DB_PASSWORD)).then(()=>{
-        console.log("Connected to db");
-    })
+function connectToDb() {
+    const dbUrl = process.env.MONGO_URL.replace('<db_password>', process.env.DB_PASSWORD);
+    mongoose
+        .connect(dbUrl)
+        .then(() => {
+            console.log("Connected to the database successfully");
+        })
+        .catch((error) => {
+            console.error("Error connecting to the database:", error.message);
+        });
 }
 
-module.exports=connectToDb;
+module.exports = connectToDb;
